@@ -1,0 +1,28 @@
+OpenAI client initialized using environment variable.
+Loading document: ata_condominio.txt
+Loading document: convencao_giardino.txt
+Loading document: regimento_interno.txt
+Total document content length: 19169 characters.
+Starting Flask server...
+ * Serving Flask app 'main'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://169.254.0.21:5000
+[33mPress CTRL+C to quit[0m
+10.87.44.1 - - [30/Apr/2025 22:53:21] "HEAD / HTTP/1.1" 200 -
+10.87.44.1 - - [30/Apr/2025 22:53:21] "GET / HTTP/1.1" 200 -
+10.87.44.1 - - [30/Apr/2025 22:53:35] "GET /?locale=en HTTP/1.1" 200 -
+10.87.44.1 - - [30/Apr/2025 22:53:57] "POST /chat HTTP/1.1" 200 -
+10.87.44.1 - - [30/Apr/2025 22:57:00] "[36mGET /?locale=en HTTP/1.1[0m" 304 -
+10.87.44.1 - - [30/Apr/2025 22:57:22] "POST /chat HTTP/1.1" 200 -
+10.87.44.1 - - [30/Apr/2025 22:58:51] "[36mGET /?locale=en HTTP/1.1[0m" 304 -
+10.87.44.1 - - [30/Apr/2025 23:00:21] "POST /chat HTTP/1.1" 200 -
+10.214.246.1 - - [30/Apr/2025 23:09:48] "HEAD / HTTP/1.1" 200 -
+10.214.246.1 - - [30/Apr/2025 23:09:48] "GET / HTTP/1.1" 200 -
+10.214.246.1 - - [30/Apr/2025 23:09:52] "[36mGET /?locale=en HTTP/1.1[0m" 304 -
+10.214.246.1 - - [30/Apr/2025 23:10:12] "POST /chat HTTP/1.1" 200 -
+10.214.246.1 - - [30/Apr/2025 23:10:39] "GET /?locale=en HTTP/1.1" 200 -
+10.214.246.1 - - [30/Apr/2025 23:10:52] "[36mGET /?locale=en HTTP/1.1[0m" 304 -
+10.214.246.1 - - [30/Apr/2025 23:11:00] "POST /chat HTTP/1.1" 200 -

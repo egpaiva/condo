@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Condomínio</title>
+    <style>
+        body { font-family: sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; background-color: #f4f4f4; }
+        #chat-container { flex-grow: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .message { padding: 10px 15px; border-radius: 15px; max-width: 70%; word-wrap: break-word; }
+        .user-message { background-color: #dcf8c6; align-self: flex-end; border-bottom-right-radius: 0; }
+        .bot-message { background-color: #fff; align-self: flex-start; border: 1px solid #eee; border-bottom-left-radius: 0; }
+        #input-area { display: flex; padding: 10px; border-top: 1px solid #ccc; background-color: #fff; }
+        #user-input { flex-grow: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-right: 10px; }
+        #send-button { padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        #send-button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div class="message bot-message">Olá! Como posso ajudar com informações sobre o condomínio hoje?</div>
+        <!-- Chat messages will be appended here -->
+    </div>
+    <div id="input-area">
+        <input type="text" id="user-input" placeholder="Digite sua pergunta...">
+        <button id="send-button">Enviar</button>
+    </div>
+
+    <script>
+        const chatContainer = document.getElementById('chat-container');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+            messageDiv.textContent = text;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight; // Auto-scroll to bottom
+        }
+
+        async function sendMessage() {
+            const userText = userInput.value.trim();
+            if (userText === '') return;
+
+            addMessage(userText, 'user');
+            userInput.value = '';
+            sendButton.disabled = true; // Disable button while waiting for response
+
+            try {
+                // Send message to backend
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: userText })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                addMessage(data.reply, 'bot');
+
+            } catch (error) {
+                console.error('Error sending message:', error);
+                addMessage('Desculpe, ocorreu um erro ao processar sua solicitação.', 'bot');
+            } finally {
+                 sendButton.disabled = false; // Re-enable button
+            }
+        }
+
+        sendButton.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
